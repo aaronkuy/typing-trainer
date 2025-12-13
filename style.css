@@ -1,0 +1,222 @@
+:root {
+    --bg-dark: #1a1a1a;
+    --bg-medium: #2d2d2d;
+    --bg-light: #3a3a3a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #4a9cff;
+    --correct: #4caf50;
+    --incorrect: #ff4444;
+    --current: #0772ff;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: var(--bg-medium);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+
+}
+
+.title{
+    text-align: center;
+    margin-top: 0;
+    flex-grow: 1;
+}
+
+.typing-box {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid #444;
+    margin-bottom: 20px;
+}
+#text-display {
+    width: 100%;
+    margin: 0 auto 10px auto;
+    color: var(--text-primary);
+    font-size: 22px;
+    text-align: left;
+    line-height: 1.4;
+    font-family: 'JetBrains Mono', 'Courier', monospace;
+    min-height: 35px;
+}
+
+#input-field {
+    width: 100%;
+    height: 70px;
+    font-size: 22px;
+    background-color: var(--bg-light);
+    color: white;
+    border: 2px solid #444
+    outline: none;
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: block;
+    margin: 0 auto;
+    transition: border-color 0.2s;
+
+}
+#input-field:focus {
+    border-color: var(--accent);
+}
+#keyboard-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    width: 95%;
+    margin: 20px auto 0 auto;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    border: 1px solid #444;
+}
+
+.key {
+    background: #333;
+    color: white;
+    padding: 10px 6px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    user-select: none;
+    border: 1px solid #444;
+    transition: all 0.1s;
+
+}
+
+.stats {
+    text-align: left;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-size: 18px;
+    background: var(--bg-light);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    margin: 20px auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+.stats div {
+    margin-bottom: 0;
+    display: flex;
+
+    align-items: center;
+    gap: 5px;
+}
+.stats span {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 20px;
+}
+#top-buttons {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    left: 40px;
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+#top-buttons button {
+    background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+    color: white;
+    border: 1px solid #444;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#top-buttons button:hover {
+    background: linear-gradient(145deg, #444, #333);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px rgba(0, 0, 0, 0.1);
+}
+
+#top-buttons button:active {
+    transform: translateY(0);
+}
+
+#sample-text {
+    width: 95%;
+    margin: 40px auto;
+    font-size: 24px;
+    color: var(--text-primary);
+    text-align: left;
+    line-height: 1.6;
+    min-height: 150px;
+    padding: 25px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    border: 1px solid #444;
+    font-family: 'JetBrains Mono', 'Courier', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.char-correct {
+    color: var(--correct);
+}
+.char-incorrect {
+    color: var(--incorrect);
+    text-decoration: underline;
+}
+.char-current {
+    background-color: var(--current);
+    color: #000;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+.key.active {
+    background: var(--current);
+    color: #000;
+    transform: scale(0.95);
+}
+
+#logo {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+    text-shadow: 0 2px rgba(0, 0, 0, 0.3);
+}
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#new-text-btn {
+    margin-right: auto;
+}
+
+#account-btn {
+    margin-left: auto;
+}
