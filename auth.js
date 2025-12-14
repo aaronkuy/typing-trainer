@@ -2,7 +2,7 @@ console.log("auth.js loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ---------- SIGNUP ----------
+    
     const signupForm = document.getElementById("signup-form");
 
     if (signupForm) {
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ---------- LOGIN ----------
+    
     const loginForm = document.getElementById("login-form");
 
     if (loginForm) {
