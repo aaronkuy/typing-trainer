@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. KEYBOARD CODE (bleibt gleich - nur blaues Aufleuchten)
+    
     const allKeys = document.querySelectorAll(".key");
     console.log("Gefundene Keys:", allKeys.length);
 
@@ -53,12 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
 
-    // 2. TEXT-GENERATOR UND TYPING-LOGIK (NUR TEXT-FARBEN)
+    
     const sampleText = document.getElementById("sample-text");
     const newTextBtn = document.getElementById("new-text-btn");
     const inputField = document.getElementById("input-field");
 
-    // Text-Bibliothek
+    
     const textLibrary = [
         "The quick brown fox jumps over the lazy dog.",
         "Practice makes perfect when learning to type faster.",
@@ -72,62 +72,62 @@ document.addEventListener("DOMContentLoaded", () => {
         "Every developer should master typing skills."
     ];
 
-    // Aktueller Text und Position
+    
     let currentText = "";
     let currentPosition = 0;
     let typedText = "";
 
-    // Zufälligen Text holen
+    
     function getRandomText() {
         const randomIndex = Math.floor(Math.random() * textLibrary.length);
         return textLibrary[randomIndex];
     }
 
-    // Text in der großen Box anzeigen (mit HTML für Farben)
+    
     function displayNewText() {
         if (sampleText) {
             currentText = getRandomText();
             currentPosition = 0;
             typedText = "";
 
-            // Text mit neutraler Farbe anzeigen
+            
             sampleText.innerHTML = currentText
                 .split('')
                 .map(char => `<span class="char">${char}</span>`)
                 .join('');
 
-            // Input-Feld leeren
+            
             if (inputField) {
                 inputField.value = "";
-                inputField.focus(); // Fokus behalten
+                inputField.focus(); 
             }
 
-            // Ersten Buchstaben als aktuell markieren
+            
             highlightCurrentChar();
         }
     }
 
-    // Aktuellen Buchstaben hervorheben (NUR TEXT-FARBEN)
+    
     function highlightCurrentChar() {
         const chars = sampleText.querySelectorAll('.char');
         chars.forEach((char, index) => {
-            char.className = 'char'; // Zurücksetzen
+            char.className = 'char'; 
 
             if (index === currentPosition) {
-                // Aktueller Buchstabe (wo der Cursor ist)
+                
                 char.classList.add('char-current');
             } else if (index < currentPosition) {
-                // Bereits getippte Buchstaben - FARBE basierend auf Korrektheit
+                
                 if (typedText[index] === currentText[index]) {
-                    char.classList.add('char-correct'); // GRÜN
+                    char.classList.add('char-correct'); 
                 } else {
-                    char.classList.add('char-incorrect'); // ROT
+                    char.classList.add('char-incorrect'); 
                 }
             }
         });
     }
 
-    // Typing-Event (NUR TEXT, KEINE TASTATUR-FARBEN)
+    
     function setupTypingListener() {
         if (!inputField) return;
 
@@ -135,10 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
             typedText = e.target.value;
             currentPosition = typedText.length;
 
-            // Text-Highlighting aktualisieren (NUR HIER passiert die Farbänderung)
+            
             highlightCurrentChar();
 
-            // Wenn Text fertig getippt ist
+            
             if (currentPosition >= currentText.length) {
                 setTimeout(() => {
                     alert("Text completed! Loading new text...");
@@ -148,16 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Beim Laden der Seite
+    
     displayNewText();
     setupTypingListener();
 
-    // New Text Button Event
+    
     if (newTextBtn) {
         newTextBtn.addEventListener("click", displayNewText);
     }
 
-    // 3. SPEZIALTASEN HANDLING (Space, Enter, Komma, Punkt)
+    
     function setupSpecialKeys() {
         const specialKeys = {
             ' ': 'space',
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. KEYBOARD CODE (bleibt gleich)
+    
     const allKeys = document.querySelectorAll(".key");
     console.log("Gefundene Keys:", allKeys.length);
 
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
 
-    // 2. ELEMENTE UND VARIABLEN
+    
     const sampleText = document.getElementById("sample-text");
     const newTextBtn = document.getElementById("new-text-btn");
     const inputField = document.getElementById("input-field");
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const accuracyElement = document.getElementById("accuracy");
     const timeElement = document.getElementById("time");
 
-    // Text-Bibliothek
+    
     const textLibrary = [
         "The quick brown fox jumps over the lazy dog.",
         "Practice makes perfect when learning to type faster.",
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Every developer should master typing skills."
     ];
 
-    // STATISTIK-VARIABLEN
+    
     let currentText = "";
     let currentPosition = 0;
     let typedText = "";
@@ -238,15 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalChars = 0;
     let testActive = false;
     let userIsTyping = false;
-    let testCompleted = false; // NEU: Flag ob Test abgeschlossen
+    let testCompleted = false; 
 
-    // 3. TEXT-GENERATOR
+    
     function getRandomText() {
         const randomIndex = Math.floor(Math.random() * textLibrary.length);
         return textLibrary[randomIndex];
     }
 
-    // 4. NEUEN TEXT STARTEN (kompletter Reset)
+    
     function startNewText() {
         currentText = getRandomText();
         currentPosition = 0;
@@ -256,33 +256,33 @@ document.addEventListener("DOMContentLoaded", () => {
         timeElapsed = 0;
         testActive = false;
         userIsTyping = false;
-        testCompleted = false; // WICHTIG: Zurücksetzen
+        testCompleted = false; 
 
-        // Timer stoppen
+        
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
         }
         startTime = null;
 
-        // Text anzeigen
+        
         sampleText.innerHTML = currentText
             .split('')
             .map(char => `<span class="char">${char}</span>`)
             .join('');
 
-        // Input-Feld leeren und fokussieren
+        
         if (inputField) {
             inputField.value = "";
             inputField.focus();
         }
 
-        // Stats zurücksetzen
+        
         updateStats();
         highlightCurrentChar();
     }
 
-    // 5. TIMER STARTEN
+    
     function startTimer() {
         if (!testActive && !testCompleted) {
             testActive = true;
@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 6. STATISTIKEN BERECHNEN UND ANZEIGEN
+    
     function updateStats() {
         let wpm = 0;
         if (timeElapsed > 0 && typedText.length > 0) {
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateStatColors(wpm, accuracy);
     }
 
-    // 7. STAT-FARBEN ÄNDERN
+    
     function updateStatColors(wpm, accuracy) {
         if (!wpmElement || !accuracyElement || !timeElement) return;
 
@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 8. TEXT-HIGHLIGHTING
+    
     function highlightCurrentChar() {
         const chars = sampleText.querySelectorAll('.char');
         chars.forEach((char, index) => {
@@ -366,26 +366,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 9. TYPING-EVENT LISTENER
+    
     function setupTypingListener() {
         if (!inputField) return;
 
         inputField.addEventListener('input', (e) => {
-            // Wenn Test bereits abgeschlossen, nichts tun
+            
             if (testCompleted) {
-                e.target.value = ""; // Eingabe löschen
+                e.target.value = ""; 
                 return;
             }
 
             const newTypedText = e.target.value;
 
-            // Timer starten bei erster Eingabe
+            
             if (newTypedText.length === 1 && typedText.length === 0) {
                 startTimer();
                 userIsTyping = true;
             }
 
-            // Nur neue Zeichen zählen
+            
             if (newTypedText.length > typedText.length) {
                 const newChar = newTypedText[newTypedText.length - 1];
                 const expectedChar = currentText[newTypedText.length - 1];
@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // Backspace behandeln
+            
             if (newTypedText.length < typedText.length) {
                 totalChars = Math.max(0, totalChars - 1);
             }
@@ -404,11 +404,11 @@ document.addEventListener("DOMContentLoaded", () => {
             typedText = newTypedText;
             currentPosition = typedText.length;
 
-            // Stats und Highlighting aktualisieren
+            
             updateStats();
             highlightCurrentChar();
 
-            // Wenn Text fertig getippt ist
+            
             if (currentPosition >= currentText.length && !testCompleted) {
                 finishTest();
             }
@@ -425,9 +425,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 10. TEST BEENDEN (mit korrektem Reset)
+    
     function finishTest() {
-        testCompleted = true; // WICHTIG: Flag setzen
+        testCompleted = true; 
         testActive = false;
         userIsTyping = false;
 
@@ -436,20 +436,20 @@ document.addEventListener("DOMContentLoaded", () => {
             timerInterval = null;
         }
 
-        // Finale Stats
+        
         updateStats();
 
-        // Erfolgsmeldung (mit Timeout für bessere UX)
+        
         setTimeout(() => {
             const wpm = parseInt(wpmElement.textContent) || 0;
             const accuracy = parseInt(accuracyElement.textContent) || 100;
 
-            // OPTIONAL: Nur bei guter Performance Meldung zeigen
+            
             if (wpm > 0 || accuracy < 100) {
                 alert(`Test abgeschlossen!\n\nWPM: ${wpm}\nGenauigkeit: ${accuracy}%\nZeit: ${timeElapsed}s`);
             }
 
-            // Automatisch neuen Text starten (mit kurzer Pause)
+            
             setTimeout(() => {
                 startNewText();
             }, 500);
@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     }
 
-    // 11. SPEZIALTASTEN
+    
     function setupSpecialKeys() {
         const specialKeys = {
             ' ': 'space',
@@ -478,25 +478,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 12. INITIALISIERUNG
+    
     function initialize() {
         startNewText();
         setupTypingListener();
         setupSpecialKeys();
 
-        // New Text Button Event
+        
         if (newTextBtn) {
             newTextBtn.addEventListener("click", startNewText);
         }
 
-        // Enter-Taste für Neustart
+        
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !inputField.matches(':focus')) {
                 startNewText();
             }
         });
 
-        // ESC-Taste zum Abbrechen/Reset
+        
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 startNewText();
@@ -504,6 +504,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Alles starten
+    
     initialize();
 });
