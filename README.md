@@ -25,4 +25,14 @@ the Time.
   
 
 
+<img width="1468" height="824" alt="Screenshot 2025-12-13 at 17 49 11" src="https://github.com/user-attachments/assets/efe95e73-85ef-4f60-b185-750b16699f9d" />
+
+
+<img width="1470" height="822" alt="Screenshot 2025-12-13 at 17 49 29" src="https://github.com/user-attachments/assets/a431c2d5-f26f-43bf-ae67-536a7c11f0fa" />
+
+<img width="1470" height="824" alt="Screenshot 2025-12-13 at 17 49 41" src="https://github.com/user-attachments/assets/3808ba15-f1bc-417c-a92e-ceea73045307" />
+
+
+
+
 
