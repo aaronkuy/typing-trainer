@@ -1,5 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
+//Arrow function. Await of DOM is fully loaded. Query all 
 
+document.addEventListener("DOMContentLoaded", () => {
+//All elements of key (HTML) saved to 'allKeys'
     const allKeys = document.querySelectorAll(".key");
     console.log("Gefundene Keys:", allKeys.length);
 
