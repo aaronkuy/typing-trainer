@@ -34,13 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+//ID's of html pull 
     
     const sampleText = document.getElementById("sample-text");
     const newTextBtn = document.getElementById("new-text-btn");
     const inputField = document.getElementById("input-field");
 
-    
+//Sample text generate  
     const textLibrary = [
         "The quick brown fox jumps over the lazy dog.",
         "Practice makes perfect when learning to type faster.",
@@ -54,37 +54,42 @@ document.addEventListener("DOMContentLoaded", () => {
         "Every developer should master typing skills."
     ];
 
-    
+   //Initial postion determination, 'let' makes it flexible  
     let currentText = "";
     let currentPosition = 0;
     let typedText = "";
 
-    
+    //Reusable function
     function getRandomText() {
+    //Each level contains one sentence, random with math
         const randomIndex = Math.floor(Math.random() * textLibrary.length);
+    //Adjust text library 
         return textLibrary[randomIndex];
     }
 
-    
+    //Implementation of prior function
     function displayNewText() {
         if (sampleText) {
             currentText = getRandomText();
             currentPosition = 0;
             typedText = "";
-
-            
+//Self explanatory, setting the conditions for getRandomText()
+//Exchange of text in HTML             
             sampleText.innerHTML = currentText
+//For index seperation and the color active event             
                 .split('')
+//Span for CSS
                 .map(char => `<span class="char">${char}</span>`)
                 .join('');
 
-            
+//Empty the input field for the new text       
             if (inputField) {
                 inputField.value = "";
+ //Sets cursor automatically to the input field
                 inputField.focus(); 
             }
 
-            
+//Marks the first letter 
             highlightCurrentChar();
         }
     }
@@ -93,14 +98,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function highlightCurrentChar() {
         const chars = sampleText.querySelectorAll('.char');
         chars.forEach((char, index) => {
+//Reseting char neutralize the color 
             char.className = 'char'; 
 
             if (index === currentPosition) {
-                
+//User input if True then color it blue
                 char.classList.add('char-current');
             } else if (index < currentPosition) {
-                
+ //Later red colored index because user typed False executions                
+//  
                 if (typedText[index] === currentText[index]) {
+//Char is shifiting green when True, when False then red
                     char.classList.add('char-correct'); 
                 } else {
                     char.classList.add('char-incorrect'); 
@@ -112,18 +120,21 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function setupTypingListener() {
         if (!inputField) return;
-
+//JS listens if user makes an input, save it to 'typedText'
         inputField.addEventListener('input', (e) => {
             typedText = e.target.value;
+//Length of elements of user's input saved to 'currentPosition'
             currentPosition = typedText.length;
 
-            
+//Resume the prior function so the coloring is active          
             highlightCurrentChar();
 
-            
+//When the index of currentPosition is smaller equal as currentText,
+//then terminate program
             if (currentPosition >= currentText.length) {
                 setTimeout(() => {
                     alert("Text completed! Loading new text...");
+//Prior function gets resumed, 500 miliseconds awaiting for UX
                     displayNewText();
                 }, 500);
             }
@@ -134,12 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
     displayNewText();
     setupTypingListener();
 
-    
+//Set up the newTextBtn in HTML 
     if (newTextBtn) {
         newTextBtn.addEventListener("click", displayNewText);
     }
 
-    
+//Special keys special treatment in JS    
     function setupSpecialKeys() {
         const specialKeys = {
             ' ': 'space',
@@ -147,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ',': ',',
             '.': '.'
         };
-
+//Blue color implementation of the special keys 
         window.addEventListener('keydown', (event) => {
             const key = event.key;
             if (specialKeys[key]) {
@@ -164,7 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+//Blue color implementation of all other keys of the grid template, or displayed keys in the DOM
+//when user's input is inside the index of the defined html keys
 document.addEventListener("DOMContentLoaded", () => {
     
     const allKeys = document.querySelectorAll(".key");
@@ -187,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
 
-    
+//Pull all the cons of stats of HTML to JS
     const sampleText = document.getElementById("sample-text");
     const newTextBtn = document.getElementById("new-text-btn");
     const inputField = document.getElementById("input-field");
@@ -195,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const accuracyElement = document.getElementById("accuracy");
     const timeElement = document.getElementById("time");
 
-    
+//Just in case copy the textLibrary again in 
     const textLibrary = [
         "The quick brown fox jumps over the lazy dog.",
         "Practice makes perfect when learning to type faster.",
@@ -209,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Every developer should master typing skills."
     ];
 
-    
+ //Setting up the initial values of stats 
     let currentText = "";
     let currentPosition = 0;
     let typedText = "";
@@ -228,7 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return textLibrary[randomIndex];
     }
 
-    
+    //Erase the individuality if the user isn't typing anything at first,
+    //the timer won't start.
     function startNewText() {
         currentText = getRandomText();
         currentPosition = 0;
