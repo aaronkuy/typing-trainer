@@ -5,17 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const allKeys = document.querySelectorAll(".key");
     console.log("Gefundene Keys:", allKeys.length);
 
-
+//Eavesdrop of keys allocated to 'pressed', in low caps because of HTML 
     window.addEventListener("keydown", (event) => {
 
         const pressed = event.key.toLowerCase();
 
 
-
+//User input of 'key' lower case else upper case
         let selector = `.key[data-key="${pressed}"], .key[data-key="${event.key}"]`;
+//Test in HTML if key exist, then applies it to 'keyEl'. 'Let' because its an multitasking event
         let keyEl = document.querySelector(selector);
 
-
+//Fallback mechanism for UX, to make it stable. 
         if (!keyEl) {
             keyEl = document.querySelector(`.key[data-key="${pressed.toUpperCase()}"]`);
         }
@@ -26,34 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
+//CSS Template initiate. Coloring event for 'key' active for 150 milliseconds
         keyEl.classList.add("active");
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-    const allKeys = document.querySelectorAll(".key");
-    console.log("Gefundene Keys:", allKeys.length);
-
-    window.addEventListener("keydown", (event) => {
-        const pressed = event.key.toLowerCase();
-        let selector = `.key[data-key="${pressed}"], .key[data-key="${event.key}"]`;
-        let keyEl = document.querySelector(selector);
-
-        if (!keyEl) {
-            keyEl = document.querySelector(`.key[data-key="${pressed.toUpperCase()}"]`);
-        }
-
-        if (!keyEl) {
-            return;
-        }
-
-        keyEl.classList.add("active");
-        setTimeout(() => keyEl.classList.remove("active"), 150);
-    });
 
     
     const sampleText = document.getElementById("sample-text");
