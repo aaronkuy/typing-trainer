@@ -253,32 +253,41 @@ document.addEventListener("DOMContentLoaded", () => {
         userIsTyping = false;
         testCompleted = false; 
 
-        
+     //Test if the timer is undefined or not zero    
         if (timerInterval) {
+    //If True, stopp the timer
             clearInterval(timerInterval);
+    //Empty the variable, else the timer still goes on even after one iteration
             timerInterval = null;
         }
+    //Empty the starttime for the next iteration 
         startTime = null;
 
-        
+     //Update sample text for the display elements in HTML    
         sampleText.innerHTML = currentText
+    //Make it to e.g. ['Hallo' 'Welt'....]
             .split('')
+    //Every element of Array converts to char in a span box
             .map(char => `<span class="char">${char}</span>`)
+    //Add every span box to joint string 
             .join('');
 
-        
+    //If inputField is True   
         if (inputField) {
+    //Empty the value of input field
             inputField.value = "";
+    //Set the cursor automatically to the input field 
             inputField.focus();
         }
 
-        
+    //Activate those functions (updateStats()) beneath  
         updateStats();
         highlightCurrentChar();
     }
 
-    
+    //Implemate the start timer function 
     function startTimer() {
+    //If those two cons are False the applies
         if (!testActive && !testCompleted) {
             testActive = true;
             startTime = Date.now();
