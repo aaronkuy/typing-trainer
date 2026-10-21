@@ -1,49 +1,38 @@
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-
-
-
-
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Typing Practice</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="logo"></div>
 
- <div class="container">
-     <h1 class="title">Typing Practice</h1>
-     <div id="top-buttons">
-         <button id="new-text-btn"><i class='bx bx-repeat'></i>
-             New Text</button>
-         <button id="account-btn" onclick="window.location.href='login_page.html'">
-             <i class='bx bxs-user'></i>Account</button>
-             </div>
-     </div>
+<main class="app">
+    <div class="container">
+        <h1 class="title">Typing Practice</h1>
+        <div id="top-buttons">
+            <button id="new-text-btn"><i class='bx bx-repeat'></i>New Text</button>
+            <button id="account-btn" onclick="window.location.href='login_page.html'"><i class='bx bxs-user'></i>Account</button>
+        </div>
+    </div>
 
-   <div class="typing-box">
-       <p id="text-display">
-           Start typing ...
-       </p>
-       <label for="input-field"></label><input id="input-field" type="text" autocomplete="off" autofocus />
-   </div>
+    <p id="sample-text">Text wird hier erscheinen...</p>
 
-<p id="sample-text">Text wird hier erscheinen...</p>
-     <div class="stats">
-         <div>WPM: <span id="wpm">0</span></div>
-         <div>Accuracy: <span id="accuracy">100</span>%</div>
-         <div>Time: <span id="time">60</span>s</div>
-     </div>
+    <div class="typing-box">
+        <p id="text-display">Start typing ...</p>
+        <label for="input-field"></label><input id="input-field" type="text" autocomplete="off" autofocus />
+    </div>
 
-     <div id="keyboard-container">
+    <div class="stats">
+        <div>WPM: <span id="wpm">0</span></div>
+        <div>Accuracy: <span id="accuracy">100</span>%</div>
+        <div>Time: <span id="time">60</span>s</div>
+    </div>
+
+    <div id="keyboard-container">
          <div class="key" data-key="q">Q</div>
          <div class="key" data-key="w">W</div>
          <div class="key" data-key="e">E</div>
@@ -74,9 +63,14 @@
          <div class="key" data-key="enter">Enter</div>
          <div class="key" data-key=",">,</div>
          <div class="key" data-key=".">.</div>
-     </div>
+    </div>
+</main>
+
+<footer class="footer">
+    Built by <a href="https://github.com/aaronkuy">Aaron Kuyucu</a> · <a href="https://github.com/aaronkuy/typing-trainer">Source on GitHub</a>
+</footer>
+
 <script src="auth.js"></script>
 <script src="script.js"></script>
 </body>
-
 </html>
