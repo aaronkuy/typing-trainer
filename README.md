@@ -1,38 +1,51 @@
 # Typing Trainer
 
-## Description 
-A pendant to monkey type, but a little bit more plain so I can focus more on the already very comprehensive typing functions of the program. 
-You can switch the text, create an account and you have the option to see your life time created stats which includes WPM, accuracy and 
-the Time.
+Typing practice in the browser, inspired by Monkeytype: type a sample text and see speed, accuracy and time.
+
+![Screenshot of Typing Trainer](docs/screenshot.png)
 
 ## Features
-- Interactive responsive website
-- Input field to write your text
-- Digital Keyboard where the index of a pressed key by the user lights up blue
-- When the user types the wrong key the index of the current text sign is collored red, else it lights up green
-- If the user ends one iteration of an entered text, it will appear a quick message box where the stats shows up
 
-## Tech Stack
-- Java Script
-- HTML
-- CSS
+- Live feedback per character: green for correct, red for wrong
+- On-screen keyboard that highlights the pressed key
+- Words per minute, accuracy and time, with a summary at the end
+- New text on demand
+- Local sign-up and log-in pages with lifetime stats
 
-## What I learned 
-- I learned to design websites where I could expose all my creativity especially on the login/signup pages
-- I learned in JS the key event implementation
-- And how to combine it with simultaneuously creating stats of the users input behaviour
-- I also dived in the initial mechanic of a plain localhost account login packeging
-  
+## Tech
 
+- HTML, CSS, vanilla JavaScript
+- Keyboard events (`keydown`)
+- `localStorage` for the demo account and stats
 
-<img width="1468" height="824" alt="Screenshot 2025-12-13 at 17 49 11" src="https://github.com/user-attachments/assets/efe95e73-85ef-4f60-b185-750b16699f9d" />
+## How to run
 
+Open the live version: **[aaronkuy.github.io/typing-trainer](https://aaronkuy.github.io/typing-trainer/)**
 
-<img width="1470" height="822" alt="Screenshot 2025-12-13 at 17 49 29" src="https://github.com/user-attachments/assets/a431c2d5-f26f-43bf-ae67-536a7c11f0fa" />
+Or run it locally. There is no build step and no dependency:
 
-<img width="1470" height="824" alt="Screenshot 2025-12-13 at 17 49 41" src="https://github.com/user-attachments/assets/3808ba15-f1bc-417c-a92e-ceea73045307" />
+```bash
+git clone https://github.com/aaronkuy/typing-trainer.git
+cd typing-trainer
+open index.html        # macOS; on Linux use xdg-open, on Windows start
+```
 
+## What I learned
 
+- Handling keyboard events and comparing input to a target text character by character
+- Calculating WPM and accuracy while the user types
+- Designing separate log-in and sign-up pages
 
+## What I'd do next
 
+- Replace the demo account: it stores the password in plain text in `localStorage`, which is fine for an exercise but never for real users. Real accounts need a server and hashed passwords
+- More texts and a choice of length
+- A history chart of past runs
 
+## Notes
+
+The account feature is a front-end exercise only. Do not use a real password.
+
+## License
+
+See [LICENSE](LICENSE).
