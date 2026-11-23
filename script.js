@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Escape always restarts the round.
+        // Escape always starts a new round with a new text.
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 startNewText();
