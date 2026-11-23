@@ -25,20 +25,34 @@
 
     // Compares the input value before and after one `input` event and returns
     // how many characters were typed in that event and how many of them match
-    // the target text. Everything after the point where the two values diverge
-    // counts as newly typed; a pure deletion therefore counts as zero.
+    // the target text. The unchanged start and the unchanged end are skipped,
+    // what lies between them in the new value is the newly typed part. A
+    // deletion leaves nothing in between and counts as zero, also when the
+    // cursor was moved into the middle of the text.
     function countKeystrokes(previousValue, nextValue, targetText) {
-        let unchanged = 0;
         const shorter = Math.min(previousValue.length, nextValue.length);
-        while (unchanged < shorter && previousValue[unchanged] === nextValue[unchanged]) {
-            unchanged++;
+
+        let start = 0;
+        while (start < shorter && previousValue[start] === nextValue[start]) {
+            start++;
         }
 
+        // The end must not reach back into the start that is already matched,
+        // otherwise "aa" -> "a" would skip the same character twice.
+        let end = 0;
+        while (
+            end < shorter - start &&
+            previousValue[previousValue.length - 1 - end] === nextValue[nextValue.length - 1 - end]
+        ) {
+            end++;
+        }
+
+        const typedUntil = nextValue.length - end;
         let correct = 0;
-        for (let i = unchanged; i < nextValue.length; i++) {
+        for (let i = start; i < typedUntil; i++) {
             if (nextValue[i] === targetText[i]) correct++;
         }
-        return { typed: nextValue.length - unchanged, correct };
+        return { typed: typedUntil - start, correct };
     }
 
     const api = { calcAccuracy, calcWpm, countKeystrokes };

@@ -54,6 +54,16 @@ test("a pure deletion counts no keystroke", () => {
     assert.deepEqual(countKeystrokes("The", "Th", "The quick"), { typed: 0, correct: 0 });
 });
 
+test("a deletion in the middle counts no keystroke either", () => {
+    assert.deepEqual(countKeystrokes("Thhe", "The", "The quick"), { typed: 0, correct: 0 });
+    assert.deepEqual(countKeystrokes("aa", "a", "aa"), { typed: 0, correct: 0 });
+});
+
+test("a character inserted in the middle counts as one keystroke", () => {
+    assert.deepEqual(countKeystrokes("Te", "The", "The quick"), { typed: 1, correct: 1 });
+    assert.deepEqual(countKeystrokes("Te", "Txe", "The quick"), { typed: 1, correct: 0 });
+});
+
 test("several characters in one event are each compared to the target", () => {
     assert.deepEqual(countKeystrokes("", "Thx", "The quick"), { typed: 3, correct: 2 });
 });
