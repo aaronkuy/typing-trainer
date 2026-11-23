@@ -2,14 +2,14 @@
 
 Typing practice in the browser, inspired by Monkeytype: type a sample text and see speed, accuracy and time.
 
-![Screenshot of Typing Trainer](docs/screenshot.png)
+![Screenshot of Typing Trainer](docs/typing-trainer-screenshot.png)
 
 ## Features
 
 - Live feedback per character: green for correct, red for wrong
 - On-screen keyboard that highlights the pressed key
 - Words per minute, accuracy and time, with a summary at the end
-- New text on demand
+- New text on demand, also with `Esc`
 
 ## Tech
 
@@ -20,13 +20,15 @@ Typing practice in the browser, inspired by Monkeytype: type a sample text and s
 
 Open the live version: **[aaronkuy.github.io/typing-trainer](https://aaronkuy.github.io/typing-trainer/)**
 
-Or run it locally. There is no build step and nothing to install. The page loads one external stylesheet, [Boxicons](https://boxicons.com/) from unpkg, for the button icon:
+Or run it locally. There is no build step and nothing to install:
 
 ```bash
 git clone https://github.com/aaronkuy/typing-trainer.git
 cd typing-trainer
 open index.html        # macOS; on Linux use xdg-open, on Windows start
 ```
+
+The page loads one external stylesheet, [Boxicons](https://boxicons.com/) from unpkg, for the icon on the "New Text" button.
 
 ## Tests
 
