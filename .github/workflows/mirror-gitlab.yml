@@ -1,0 +1,58 @@
+name: Mirror to GitLab
+
+# Keeps https://gitlab.com/aaronkuyucu/typing-trainer as a read-only copy.
+# GitHub is the source of truth; GitLab Free has no pull mirroring, so we push.
+on:
+  push:
+    branches: ['**']
+    tags: ['**']
+  delete:
+  schedule:
+    # Hourly, so branches that do not contain this file are mirrored too.
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-gitlab
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TARGET: git@gitlab.com:aaronkuyucu/typing-trainer.git
+      # Published GitLab.com host key fingerprint (ED25519).
+      GITLAB_ED25519_FP: SHA256:eUXGGm1YGsMAS7vkcx6JOJdOGHPem5gQp4taiCfCLB8
+    steps:
+      - name: Clone all refs from GitHub
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          git -c http.extraheader="AUTHORIZATION: basic $auth" \
+            clone --mirror "https://github.com/${GITHUB_REPOSITORY}.git" repo.git
+          # Pull request refs are GitHub-only and must not be mirrored.
+          git -C repo.git for-each-ref --format='delete %(refname)' refs/pull \
+            | git -C repo.git update-ref --stdin
+
+      - name: Set up SSH for GitLab
+        env:
+          KEY: ${{ secrets.GITLAB_MIRROR_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/gitlab_mirror
+          chmod 600 ~/.ssh/gitlab_mirror
+          ssh-keyscan -t ed25519 gitlab.com > ~/.ssh/known_hosts 2>/dev/null
+          # Refuse to continue if the scanned key is not GitLab's published one.
+          ssh-keygen -lf ~/.ssh/known_hosts | grep -q " $GITLAB_ED25519_FP "
+
+      - name: Push branches and tags to GitLab
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/gitlab_mirror -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes
+        run: |
+          git -C repo.git push --prune "$TARGET" \
+            '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
