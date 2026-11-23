@@ -10,19 +10,17 @@ Typing practice in the browser, inspired by Monkeytype: type a sample text and s
 - On-screen keyboard that highlights the pressed key
 - Words per minute, accuracy and time, with a summary at the end
 - New text on demand
-- Local sign-up and log-in pages with lifetime stats
 
 ## Tech
 
 - HTML, CSS, vanilla JavaScript
-- Keyboard events (`keydown`)
-- `localStorage` for the demo account and stats
+- Keyboard and `input` events
 
 ## How to run
 
 Open the live version: **[aaronkuy.github.io/typing-trainer](https://aaronkuy.github.io/typing-trainer/)**
 
-Or run it locally. There is no build step and no dependency:
+Or run it locally. There is no build step and nothing to install. The page loads one external stylesheet, [Boxicons](https://boxicons.com/) from unpkg, for the button icon:
 
 ```bash
 git clone https://github.com/aaronkuy/typing-trainer.git
@@ -30,21 +28,27 @@ cd typing-trainer
 open index.html        # macOS; on Linux use xdg-open, on Windows start
 ```
 
+## Tests
+
+The WPM and accuracy calculations live in `stats.js` as pure functions and are covered by tests that use Node's built-in test runner (Node 20 or newer, no packages):
+
+```bash
+node --test
+```
+
+## How accuracy is counted
+
+Accuracy is the share of correct keystrokes among all keystrokes. Backspace does not take a keystroke back, so a mistake that was corrected still counts. WPM is gross: every typed character counts, with five characters as one word.
+
 ## What I learned
 
 - Handling keyboard events and comparing input to a target text character by character
 - Calculating WPM and accuracy while the user types
-- Designing separate log-in and sign-up pages
 
 ## What I'd do next
 
-- Replace the demo account: it stores the password in plain text in `localStorage`, which is fine for an exercise but never for real users. Real accounts need a server and hashed passwords
 - More texts and a choice of length
-- A history chart of past runs
-
-## Notes
-
-The account feature is a front-end exercise only. Do not use a real password.
+- Keep past results (for example in `localStorage`) and show them as a chart
 
 ## License
 
