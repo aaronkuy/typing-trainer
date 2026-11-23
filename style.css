@@ -156,7 +156,9 @@ button {
 
 .stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* minmax(0, 1fr) lets a column shrink below its content; plain 1fr
+       does not, which pushed the third card off narrow screens. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     margin-bottom: 20px;
 }
@@ -267,5 +269,21 @@ button {
 
     .key {
         font-size: 0.7rem;
+    }
+
+    .stats {
+        gap: 8px;
+    }
+
+    .stats div {
+        flex-wrap: wrap;
+        align-content: center;
+        column-gap: 4px;
+        padding: 10px 6px;
+        font-size: 0.8rem;
+    }
+
+    .stats span {
+        font-size: 1.2rem;
     }
 }
