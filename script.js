@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
 
-//Fetch HTML elements and allocate it to 
     const sampleText = document.getElementById("sample-text");
     const newTextBtn = document.getElementById("new-text-btn");
     const inputField = document.getElementById("input-field");
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const accuracyElement = document.getElementById("accuracy");
     const timeElement = document.getElementById("time");
 
-//Our sample text for the user to write
+    // Practice sentences; one is picked at random per round.
     const textLibrary = [
         "The quick brown fox jumps over the lazy dog.",
         "Practice makes perfect when learning to type faster.",
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Every developer should master typing skills."
     ];
 
-//Setting the intial values of the varialbles 
+    // Round state
     let currentText = "";
     let currentPosition = 0;
     let typedText = "";
@@ -50,15 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalKeystrokes = 0;
     let testActive = false;
     let userIsTyping = false;
-    let testCompleted = false; 
+    let testCompleted = false;
 
-//E.g. 0.452 * 10 = 4.52 → 4 element of the library 
     function getRandomText() {
         const randomIndex = Math.floor(Math.random() * textLibrary.length);
         return textLibrary[randomIndex];
     }
 
-//Setting the initial values before the user starts typing 
+    // Resets the round state and renders a new sentence.
     function startNewText() {
         currentText = getRandomText();
         currentPosition = 0;
@@ -70,44 +68,37 @@ document.addEventListener("DOMContentLoaded", () => {
         userIsTyping = false;
         testCompleted = false;
 
-//Reset the value of timerInterval if it exist for the next iteration 
+        // Stop a timer left over from the previous round.
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
         }
-//Also reset startTime
         startTime = null;
 
-//Insert the absorbed text to the sampleText element in HTML 
+        // One <span> per character so each can be styled on its own.
         sampleText.innerHTML = currentText
-//Make the sample text string to an array 
             .split('')
-//Convert it to span in order to change the color of the letter and join it to a string
             .map(char => `<span class="char">${char}</span>`)
             .join('');
 
-//Clear out the elements in input field 
         if (inputField) {
             inputField.value = "";
-//Input field is already clicked for better UX
+            // Keep focus in the input so typing can start right away.
             inputField.focus();
         }
 
-//Functions defined beneath 
         updateStats();
         highlightCurrentChar();
     }
 
-//Enable the timer only when the iteration hasn't started nor completed 
+    // Starts the timer once per round, on the first keystroke.
     function startTimer() {
         if (!testActive && !testCompleted) {
-//If so start the test
             testActive = true;
-//Save the current time (1.000.000 ms) 
             startTime = Date.now();
-//Set elepased time to zero
             timeElapsed = 0;
-//Make every 0.1 seconds an interval, timer implementation 
+            // Refresh the stats every 100 ms; elapsed time is derived from Date.now()
+            // rather than counted, so a throttled tab does not fall behind.
             timerInterval = setInterval(() => {
                 timeElapsed = Math.floor((Date.now() - startTime) / 1000);
                 updateStats();
@@ -115,22 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-//Set wpm to zero
+    // Recomputes WPM and accuracy and writes them to the page.
     function updateStats() {
         const wpm = TypingStats.calcWpm(typedText.length, timeElapsed);
         const accuracy = TypingStats.calcAccuracy(correctKeystrokes, totalKeystrokes);
-//Display the calculated values in DOM 
         if (wpmElement) wpmElement.textContent = wpm;
         if (accuracyElement) accuracyElement.textContent = accuracy;
         if (timeElement) timeElement.textContent = timeElapsed;
-//Change the color of wpm and accuracy depending on how the user is typing for better UX
         updateStatColors(wpm, accuracy);
     }
-//Color implementation of the elements of the sample text 
+
+    // Marks typed characters as correct or incorrect and highlights the next one.
     function highlightCurrentChar() {
-//If sample text in HTML is false, then skip the code beneath 
         if (!sampleText) return;
-//Allocate all chars in HTML to the correponded variable 
         const chars = sampleText.querySelectorAll('.char');
 
         chars.forEach((char, index) => {
@@ -139,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (index === currentPosition) {
                 char.classList.add('char-current');
             }
-//Determination of the color of the element 
             else if (index < currentPosition) {
                 if (typedText[index] === currentText[index]) {
                     char.classList.add('char-correct');
@@ -150,12 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-//Saved information of wmp and accuracy in order to determine the color 
+    // Colours each stat by threshold: good, ok, poor.
     function updateStatColors(wpm, accuracy) {
-//Skip the code beneath if one of those variables are false 
         if (!wpmElement || !accuracyElement || !timeElement) return;
-//Green if at least 60 wpm, yellow if at least 30 wpm, else red 
         if (wpm >= 60) {
             wpmElement.style.color = "#4caf50";
         } else if (wpm >= 30) {
@@ -163,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             wpmElement.style.color = "#ff4444";
         }
-//Green if at least 95% accuaracy, yellow if at least 85%, else red
         if (accuracy >= 95) {
             accuracyElement.style.color = "#4caf50";
         } else if (accuracy >= 85) {
@@ -171,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             accuracyElement.style.color = "#ff4444";
         }
-//Red if above 120 secs, yellow if above 60 secs, else green
+        // The time is only coloured while a round is being typed.
         if (userIsTyping) {
             if (timeElapsed > 120) {
                 timeElement.style.color = "#ff4444";
@@ -182,40 +165,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-//If input field is false skip the code beneath
+
     function setupTypingListener() {
         if (!inputField) return;
 
         inputField.addEventListener('input', (e) => {
-//If testCompleted is true then empty our input field and skip the code beneath
+            // Ignore input in the short pause between the result and the next round.
             if (testCompleted) {
                 e.target.value = "";
                 return;
             }
-//Save the current elements of the input field to newTypedText
             const newTypedText = e.target.value;
 
-//If the user starts typing, enable the startTimer function 
             if (newTypedText.length === 1 && typedText.length === 0) {
                 startTimer();
-//The variable userIsTyping is shifting to true 
                 userIsTyping = true;
             }
+
+            // Keystrokes are only ever added. Subtracting on backspace is what let
+            // accuracy climb above 100% before.
             const step = TypingStats.countKeystrokes(typedText, newTypedText, currentText);
             totalKeystrokes += step.typed;
             correctKeystrokes += step.correct;
 
-//Update to the old state 
             typedText = newTypedText;
-//Correspondingly save the amount of elements of the prior cache 
             currentPosition = typedText.length;
 
-//Enable the linked function for UX and stabiltiy 
             updateStats();
             highlightCurrentChar();
 
-//Enable finishTest if we reached the same length of elements of the sample text 
-//and testCompleted is set to false
             if (currentPosition >= currentText.length && !testCompleted) {
                 finishTest();
             }
@@ -232,21 +210,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-//If enable finishTest, variable values are correspondignly shifting
     function finishTest() {
         testCompleted = true;
         testActive = false;
         userIsTyping = false;
-//Reset the timer 
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
         }
 
-//Including the HTML in DOM of the stats 
         updateStats();
 
-//Executed after 0,3 secs, prevent abrupt finishing 
+        // Let the last character render before the blocking alert opens.
         setTimeout(() => {
             // Computed from state. Reading the numbers back from the page
             // with parseInt(...) || 100 reported an accuracy of 0 as 100.
@@ -257,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`Test complete!\n\nWPM: ${wpm}\nAccuracy: ${accuracy}%\nTime: ${timeElapsed}s`);
             }
 
-//After 0.5 seconds new text generated and timer reset 
             setTimeout(() => {
                 startNewText();
             }, 500);
@@ -265,25 +239,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     }
 
-//Merge all prior functions together 
+    // Entry point: render the first sentence and register the listeners.
     function initialize() {
         startNewText();
         setupTypingListener();
 
-//Button implementation, by pressing, generate a new text
         if (newTextBtn) {
             newTextBtn.addEventListener("click", startNewText);
         }
 
-//If the input field isn't clicked and we press enter, then the input field is 
-//enabled
+        // Enter outside the input starts a new round.
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !inputField.matches(':focus')) {
                 startNewText();
             }
         });
 
-//The same with esc key 
+        // Escape always restarts the round.
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 startNewText();
@@ -291,6 +263,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-//Starting the DOM functions 
     initialize();
 });
