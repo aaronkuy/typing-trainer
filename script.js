@@ -253,14 +253,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Executed after 0,3 secs, prevent abrupt finishing 
         setTimeout(() => {
-//Makes an integer of the HTML value of wmpElement if false, else 0
-            const wpm = parseInt(wpmElement.textContent) || 0;
-//The same with accuracy, or 100% if e.g. the user hasn't typed
-            const accuracy = parseInt(accuracyElement.textContent) || 100;
+            // Computed from state. Reading the numbers back from the page
+            // with parseInt(...) || 100 reported an accuracy of 0 as 100.
+            const wpm = TypingStats.calcWpm(typedText.length, timeElapsed);
+            const accuracy = TypingStats.calcAccuracy(correctKeystrokes, totalKeystrokes);
 
-//End result notation 
             if (wpm > 0 || accuracy < 100) {
-                alert(`Test abgeschlossen!\n\nWPM: ${wpm}\nGenauigkeit: ${accuracy}%\nZeit: ${timeElapsed}s`);
+                alert(`Test complete!\n\nWPM: ${wpm}\nAccuracy: ${accuracy}%\nTime: ${timeElapsed}s`);
             }
 
 //After 0.5 seconds new text generated and timer reset 
