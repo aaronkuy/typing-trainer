@@ -1,23 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-//Fetch all HTML keys to the variable 'allKeys' 
-    const allKeys = document.querySelectorAll(".key");
-    console.log("Gefundene Keys:", allKeys.length);
-//If the user types 'U' it converts to 'u'
+    // Look the pressed key up in a map instead of building a CSS selector
+    // from event.key: a selector made from `"` or `\` is invalid and throws.
+    const keyElements = new Map();
+    document.querySelectorAll(".key").forEach((keyEl) => {
+        keyElements.set(keyEl.dataset.key, keyEl);
+    });
+
     window.addEventListener("keydown", (event) => {
-        const pressed = event.key.toLowerCase();
-//The key the user is pressing is saved to selector 
-        let selector = `.key[data-key="${pressed}"], .key[data-key="${event.key}"]`;
-//Testing if the key is on the website, if so save it to keyEl
-        let keyEl = document.querySelector(selector);
- //If keyEl is false test if the element may be find in upper case 
-        if (!keyEl) {
-            keyEl = document.querySelector(`.key[data-key="${pressed.toUpperCase()}"]`);
-        }
-//If keyEl stil false, skip every code beneath, and await the next iteration 
+        // data-key values are lower case ("a", "enter", " "), so "A" and
+        // "Enter" have to be normalized before the lookup.
+        const keyEl = keyElements.get(event.key.toLowerCase());
         if (!keyEl) {
             return;
         }
-//If/keyEl is true activate the color in CSS for 150 ms and then remove it again
         keyEl.classList.add("active");
         setTimeout(() => keyEl.classList.remove("active"), 150);
     });
@@ -270,32 +265,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     }
 
-//Implementation of the extra signs 
-    function setupSpecialKeys() {
-        const specialKeys = {
-            ' ': 'space',
-            'Enter': 'enter',
-            ',': ',',
-            '.': '.'
-        };
-
-        window.addEventListener('keydown', (event) => {
-            const key = event.key;
-            if (specialKeys[key]) {
-                const keyEl = document.querySelector(`.key[data-key="${specialKeys[key]}"]`);
-                if (keyEl) {
-                    keyEl.classList.add('active');
-                    setTimeout(() => keyEl.classList.remove('active'), 150);
-                }
-            }
-        });
-    }
-
 //Merge all prior functions together 
     function initialize() {
         startNewText();
         setupTypingListener();
-        setupSpecialKeys();
 
 //Button implementation, by pressing, generate a new text
         if (newTextBtn) {
