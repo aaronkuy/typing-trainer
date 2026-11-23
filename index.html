@@ -8,8 +8,6 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="logo"></div>
-
 <main class="app">
     <div class="container">
         <h1 class="title">Typing Practice</h1>
@@ -21,8 +19,8 @@
     <p id="sample-text">Text will appear here...</p>
 
     <div class="typing-box">
-        <p id="text-display">Start typing ...</p>
-        <label for="input-field"></label><input id="input-field" type="text" autocomplete="off" autofocus />
+        <label id="text-display" for="input-field">Start typing</label>
+        <input id="input-field" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus />
     </div>
 
     <div class="stats">
