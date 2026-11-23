@@ -2,7 +2,7 @@ name: Test
 
 on:
   push:
-    branches: [Typing-Practice, main]
+    branches: [main]
   pull_request:
 
 permissions:
