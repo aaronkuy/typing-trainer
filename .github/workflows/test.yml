@@ -1,0 +1,19 @@
+name: Test
+
+on:
+  push:
+    branches: [Typing-Practice, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The runner image ships a current Node; the tests need no packages.
+      - run: node --version
+      - run: node --check script.js
+      - run: node --test
