@@ -15,7 +15,9 @@
         return Math.round(Math.min(1, Math.max(0, ratio)) * 100);
     }
 
-    // Gross words per minute: every typed character counts, wrong ones too.
+    // Gross words per minute: every character in the input counts, wrong
+    // ones too. The caller passes the current input length, so characters
+    // removed with Backspace are not counted.
     function calcWpm(typedChars, elapsedSeconds) {
         if (typedChars <= 0 || elapsedSeconds <= 0) return 0;
         const words = typedChars / CHARS_PER_WORD;

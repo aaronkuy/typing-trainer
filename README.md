@@ -40,7 +40,7 @@ node --test
 
 ## How accuracy is counted
 
-Accuracy is the share of correct keystrokes among all keystrokes. Backspace does not take a keystroke back, so a mistake that was corrected still counts. WPM is gross: every typed character counts, with five characters as one word.
+Accuracy is the share of correct keystrokes among all keystrokes. Backspace does not take a keystroke back, so a mistake that was corrected still counts. WPM is gross: it counts every character in the input field, wrong ones included, with five characters as one word. Characters removed with Backspace no longer count.
 
 ## What I learned
 
