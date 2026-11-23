@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let startTime = null;
     let timerInterval = null;
     let timeElapsed = 0;
-    let correctChars = 0;
-    let totalChars = 0;
+    let correctKeystrokes = 0;
+    let totalKeystrokes = 0;
     let testActive = false;
     let userIsTyping = false;
     let testCompleted = false; 
@@ -68,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
         currentText = getRandomText();
         currentPosition = 0;
         typedText = "";
-        correctChars = 0;
-        totalChars = 0;
+        correctKeystrokes = 0;
+        totalKeystrokes = 0;
         timeElapsed = 0;
         testActive = false;
         userIsTyping = false;
@@ -122,23 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Set wpm to zero
     function updateStats() {
-        let wpm = 0;
-//Only update stats if the user started typing
-        if (timeElapsed > 0 && typedText.length > 0) {
-//We say an index of 5 is one word as a standard rule for reckoning
-            const wordsTyped = typedText.length / 5;
-//Convert the value of elapsed time to a minute for reckoning 
-            const minutes = timeElapsed / 60;
-//Float value expected, so we round it 
-            wpm = Math.max(0, Math.round(wordsTyped / minutes));
-        }
-//Initial value of accuracy is set to 100%
-        let accuracy = 100;
-//If the user starts typed the first element of the text 
-        if (totalChars > 0) {
-//Calculate the accuracy to per cent 
-            accuracy = Math.max(0, Math.round((correctChars / totalChars) * 100));
-        }
+        const wpm = TypingStats.calcWpm(typedText.length, timeElapsed);
+        const accuracy = TypingStats.calcAccuracy(correctKeystrokes, totalKeystrokes);
 //Display the calculated values in DOM 
         if (wpmElement) wpmElement.textContent = wpm;
         if (accuracyElement) accuracyElement.textContent = accuracy;
@@ -221,26 +206,10 @@ document.addEventListener("DOMContentLoaded", () => {
 //The variable userIsTyping is shifting to true 
                 userIsTyping = true;
             }
-//If more elements in newTypedText than typeText, test if new key got pressed
+            const step = TypingStats.countKeystrokes(typedText, newTypedText, currentText);
+            totalKeystrokes += step.typed;
+            correctKeystrokes += step.correct;
 
-            if (newTypedText.length > typedText.length) {
-//Save the index of the last element typed to newChar
-                const newChar = newTypedText[newTypedText.length - 1];
-//Which element should be pressed on the text
-                const expectedChar = currentText[newTypedText.length - 1];
-//Add +1 to totalChars and add +1 to correctChars if the typed element equals the 
-//expected one 
-                totalChars++;
-                if (newChar === expectedChar) {
-                    correctChars++;
-                }
-            }
-
-//If the user press backspace, erase one value of totalChars, not beneath 0
-//no negative value of the input field
-            if (newTypedText.length < typedText.length) {
-                totalChars = Math.max(0, totalChars - 1);
-            }
 //Update to the old state 
             typedText = newTypedText;
 //Correspondingly save the amount of elements of the prior cache 
