@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Colours each stat by threshold: good, ok, poor.
+    // Colors each stat by threshold: good, ok, poor.
     function updateStatColors(wpm, accuracy) {
         if (!wpmElement || !accuracyElement || !timeElement) return;
         if (wpm >= 60) {
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             accuracyElement.style.color = "#ff4444";
         }
-        // The time is only coloured while a round is being typed.
+        // The time is only colored while a round is being typed.
         if (userIsTyping) {
             if (timeElapsed > 120) {
                 timeElement.style.color = "#ff4444";
